@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import UserModel from "../model/userModel";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 
 // to create user
 export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
     try{
-       const {username,email_id,password,phoneNumber}=req.body
+       const {email_id,password}=req.body
        const existUser=await UserModel.findOne({email:email_id});
 
        if(existUser){
@@ -37,8 +38,15 @@ export const userLogin=async(req:Request,res:Response,next:NextFunction)=>{
 
        if(existUser){
         const match = await bcrypt.compare(password, existUser.password);
-           
-            match ?res.status(200).json({success:true,message:"Logged in succesfully"}) : res.status(200).json({success:false,message:"password not matching"}) 
+        const key:string=process.env.JWT_KEY as string
+            if(match && key){
+                const token = jwt.sign({ id: existUser._id }, key);
+                res.status(200).json({success:true,message:"Logged in succesfully",token:token}) 
+            }else{
+                res.status(200).json({success:false,message:"password not matching"})
+            }
+
+            
        }else{
         res.status(200).json({success:false,message:"This user does not exist"})
        }

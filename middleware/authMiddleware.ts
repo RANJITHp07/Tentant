@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User, { IUser } from '../model/userModel';
 
 export interface IGetUserAuthInfoRequest extends Request {
   user: any
