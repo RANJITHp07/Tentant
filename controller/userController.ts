@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken"
 export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
     try{
        const {email_id,password}=req.body
-       const existUser=await UserModel.findOne({email:email_id});
+       const existUser=await UserModel.findOne({email_id:email_id});
 
        if(existUser){
          res.status(202).json({sucess:false,message:"Already the user Exist"})
@@ -34,8 +34,8 @@ export const userLogin=async(req:Request,res:Response,next:NextFunction)=>{
     try{
        const {email_id,password}=req.body
 
-       const existUser=await UserModel.findOne({email:email_id});
-
+       const existUser=await UserModel.findOne({email_id:email_id});
+          
        if(existUser){
         const match = await bcrypt.compare(password, existUser.password);
         const key:string=process.env.JWT_KEY as string

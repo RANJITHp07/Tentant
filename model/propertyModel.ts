@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 // Define the Property interface
 export interface IProperty {
-  userId: string;
+  userId?: string;
   property_name: string;
   property_address: string;
   property_type: "Apartment" | "Vacation homes" | "Single-family" | "Condominiums" | "Student Housing";
@@ -17,8 +17,9 @@ export interface IProperty {
 
 const propertySchema = new Schema<IProperty>({
   userId: {
-    ref:"User",
-    required:true
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
   },
   property_name: {
     type: String,

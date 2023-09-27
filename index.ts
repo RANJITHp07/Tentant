@@ -7,6 +7,7 @@ import cors from 'cors';
 import userRouter from "./router/userRouter"
 import propertyRouter from "./router/propertyRoute"
 import path from 'path';
+import multer from 'multer';
 
 dotenv.config();
 connectDB();
@@ -19,6 +20,8 @@ app.use(helmet());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
+
+
 
 // Define routes
 app.use(userRouter)

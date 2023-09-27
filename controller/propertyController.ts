@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import PropertyModel,{IProperty}  from "../model/propertyModel";
 
+
 // to create the property
 export const createProperty=async(req:Request,res:Response,next:NextFunction)=>{
     try{
