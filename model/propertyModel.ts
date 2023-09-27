@@ -57,7 +57,7 @@ const propertySchema = new Schema<Property>({
     type: [String],
     required: true,
   },
-});
+},{timestamps:true});
 
 
 const PropertyModel = mongoose.model<Property>('Property', propertySchema);
