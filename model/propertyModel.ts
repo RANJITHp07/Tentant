@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 // Define the Property interface
-interface Property {
+export interface IProperty {
   userId: string;
   property_name: string;
   property_address: string;
@@ -15,7 +15,7 @@ interface Property {
 }
 
 
-const propertySchema = new Schema<Property>({
+const propertySchema = new Schema<IProperty>({
   userId: {
     ref:"User",
     required:true
@@ -60,6 +60,6 @@ const propertySchema = new Schema<Property>({
 },{timestamps:true});
 
 
-const PropertyModel = mongoose.model<Property>('Property', propertySchema);
+const PropertyModel = mongoose.model<IProperty>('Property', propertySchema);
 
 export default PropertyModel;

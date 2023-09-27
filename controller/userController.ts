@@ -12,7 +12,7 @@ export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
        if(existUser){
          res.status(202).json({sucess:false,message:"Already the user Exist"})
        }else{
-        const saltRounds = 10;
+        const saltRounds:number = 10;
         const salt = await bcrypt.genSalt(saltRounds);
          const hashedPassword = await bcrypt.hash(password, salt); // hashed the password
          const newUser={...req.body,password:hashedPassword}
@@ -29,7 +29,7 @@ export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
 
 //to  allow login of user with email_id
 
-const userLogin=async(req:Request,res:Response,next:NextFunction)=>{
+export const userLogin=async(req:Request,res:Response,next:NextFunction)=>{
     try{
        const {email_id,password}=req.body
 

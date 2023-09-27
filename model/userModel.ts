@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface User{
+export interface IUser{
     username:string,
     email_id:string,
     password:string,
@@ -8,7 +8,7 @@ interface User{
 }
 
 
-const UserSchema= new Schema<User>({
+const UserSchema= new Schema<IUser>({
     username:{
         type:String,
         required:true
@@ -28,6 +28,6 @@ const UserSchema= new Schema<User>({
 },{timestamps:true})
 
 
-const UserModel = mongoose.model<User>('Property', UserSchema);
+const  UserModel = mongoose.model<IUser>('Property', UserSchema);
 
 export default UserModel;
