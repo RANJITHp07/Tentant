@@ -81,7 +81,7 @@ export const filterProperties = async (req: Request, res: Response, next: NextFu
         const [year, month, day] = date.split('-');
          const d=`${day}-${month}-${year}`;
          console.log([d])
-        filter.push({ availableDates: {$in:[ d ]} });
+        filter.push({ availableDates: { $elemMatch: { $in: [d] }} });
     }
     if (price) {
       filter.push({ price: { $lt: Number(price)*1000 } });
