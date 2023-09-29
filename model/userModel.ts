@@ -23,7 +23,7 @@ const UserSchema= new Schema<IUser>({
     },
     phoneNumber:{
         type:String,
-        required:true
+        
     }
 },{timestamps:true})
 

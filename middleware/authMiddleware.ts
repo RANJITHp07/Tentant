@@ -12,7 +12,7 @@ export const signinverify = async (req: Request, res: Response, next: NextFuncti
       (req as IGetUserAuthInfoRequest).user = decode;
       next();
     }else{
-        res.status(403).json("user is unAutherized")
+        res.status(403).json("user is unAuthorized")
     }
   } catch (err) {
     console.log(err);

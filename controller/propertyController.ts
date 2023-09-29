@@ -5,7 +5,10 @@ import PropertyModel,{IProperty}  from "../model/propertyModel";
 // to create the property
 export const createProperty=async(req:Request,res:Response,next:NextFunction)=>{
     try{
-        const propertyDetails:IProperty=req.body
+        const images = req.files as Express.Multer.File[];
+  const fileNames = images?.map((file) => file.originalname);
+ 
+        const propertyDetails:IProperty={...req.body,images:fileNames}
        await PropertyModel.create(propertyDetails)
        res.status(200).json({success:true,message:"Propery details created"})
     }catch(err){

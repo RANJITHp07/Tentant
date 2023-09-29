@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { signinverify } from "../middleware/authMiddleware";
 import { createProperty, deleteProperty, getAllproperties, getSingleUserProperties, updateProperty } from "../controller/propertyController";
+import { upload } from "../middleware/multerMiddleware";
 
 const router=Router();
 
-router.post("/api/property",signinverify,createProperty); // to create property
+router.post("/api/property",upload.array("file"),createProperty); // to create property
 
 router.put("/api/property/:id",signinverify,updateProperty);//to update the property
 

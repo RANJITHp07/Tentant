@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken"
 export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
     try{
        const {email_id,password}=req.body
+       
        const existUser=await UserModel.findOne({email_id:email_id});
 
        if(existUser){
@@ -19,7 +20,7 @@ export const  userSignIn=async(req:Request,res:Response,next:NextFunction)=>{
          const newUser={...req.body,password:hashedPassword}
          await UserModel.create(newUser)
 
-         res.status(202).json({sucess:true,message:"User created"})
+         res.status(202).json({success:true,message:"User created"})
        }
     }catch(err){
        new Error(`authentication err:${err}`);

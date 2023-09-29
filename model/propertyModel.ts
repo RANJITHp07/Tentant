@@ -11,6 +11,7 @@ export interface IProperty {
   squareFeet: number;
   price: number;
   description: string;
+  availableDates:string[]
   images: string[];
 }
 
@@ -56,6 +57,10 @@ const propertySchema = new Schema<IProperty>({
   },
   images: {
     type: [String],
+    required: true,
+  },
+  availableDates: {
+    type: [String], 
     required: true,
   },
 },{timestamps:true});
