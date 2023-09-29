@@ -65,34 +65,41 @@ export const getSingleUserProperties=async(req:Request,res:Response,next:NextFun
     }
 }   
 
-export const filterProperties=async(req:Request,res:Response,next:NextFunction)=>{
-    try{
-         const {
-           city,
-           date,
-           price,
-           type
-         }=req.query
 
-         const filter:any=[]
-         if(city){
-            filter.push({ property_address: { $regex: city, $options: 'i' } });
-         }else if(date){
-            filter.push({available_date:{$in:date}})
-         }else if(price){
-            filter.push({ price: { $gt: Number(price) } });
-         }else if(type){
-            filter.push({type:type})
-         }
-
-         const properties=await PropertyModel.find(filter)
-         await PropertyModel.find({
-            $and: filter.length > 0 ? filter : [{}]
-          }).populate('userId').sort({createdAt:-1});
-
-          res.status(200).json({success: true,message:"Filtered properties",data:properties});
-    }catch(err){
-        throw err
+export const filterProperties = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { city, date, price, type } = req.query;
+    
+    
+    const filter: any[] = [];
+    console.log(type)
+    if (city) {
+      
+      filter.push({ property_address: { $regex: city, $options: 'i' } });
     }
-}
+     if (date && typeof date === 'string') {
+        const [year, month, day] = date.split('-');
+         const d=`${day}-${month}-${year}`;
+         console.log([d])
+        filter.push({ availableDates: {$in:[ d ]} });
+    }
+    if (price) {
+      filter.push({ price: { $lt: Number(price)*1000 } });
+    } 
+    if (type) {
+      console.log(type)
+      filter.push({ property_type: type }); 
+    }
 
+    const properties = await PropertyModel.find({
+      $and: filter.length > 0 ? filter : [{}],
+    })
+      .populate('userId')
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({ success: true, message: 'Filtered properties', data: properties });
+  } catch (err) {
+    
+    next(err);
+  }
+};
